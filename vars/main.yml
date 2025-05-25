@@ -1,0 +1,15 @@
+---
+
+docker_project_name: "{{ nebula_sync_project_name }}"
+
+
+nebula_sync_primary_env: "{{ [
+    nebula_sync_primary_pihole.base_url,
+    nebula_sync_primary_pihole.password
+  ] | join('|') }}"
+
+nebula_sync_secondary_env: "{{ nebula_sync_secondary_piholes
+  | map(attribute='base_url')
+  | zip(nebula_sync_secondary_piholes | map(attribute='password'))
+  | map('join', '|')
+  | join(',') }}"

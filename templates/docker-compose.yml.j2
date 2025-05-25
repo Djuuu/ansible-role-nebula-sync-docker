@@ -1,0 +1,25 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+# {{ template_fullpath | regex_replace('^' ~ role_path, role_path | basename) }}
+
+name: {{ docker_project_slug }}
+
+services:
+
+  nebula-sync:
+    # https://github.com/lovelaze/nebula-sync/
+    image: ghcr.io/lovelaze/nebula-sync:{{ nebula_sync_version }}
+    container_name: {{ docker_project_slug }}
+    restart: {{ docker_project_restart }}
+    {{ docker_project_service_network_options | indent(4) }}
+    {{ docker_project_service_additional_options | indent(4) }}
+    env_file:
+      - .env
+
+    labels:
+      # What's up Docker? - https://github.com/getwud/wud
+      wud.tag.include: ^\d+\.\d+$$
+      wud.watch.digest: true
+
+{{ docker_project_networks }}
+{{ docker_project_compose_additional_options }}

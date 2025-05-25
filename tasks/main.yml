@@ -1,0 +1,50 @@
+---
+
+## Check
+
+- name: Check variables
+  ansible.builtin.assert:
+    that:
+      - nebula_sync_primary_pihole is defined and nebula_sync_primary_pihole
+      - nebula_sync_primary_pihole.base_url is defined and nebula_sync_primary_pihole.base_url
+      - nebula_sync_primary_pihole.password is defined and nebula_sync_primary_pihole.password
+      - nebula_sync_secondary_piholes is defined
+      - nebula_sync_secondary_piholes | length > 0
+      - nebula_sync_secondary_piholes[0].base_url is defined and nebula_sync_secondary_piholes[0].base_url
+      - nebula_sync_secondary_piholes[0].password is defined and nebula_sync_secondary_piholes[0].password
+
+## Init
+
+- name: Ensure project directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ docker_project_path }}"
+  tags: ["init"]
+
+## Configure
+
+- name: Template .env
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "{{ docker_project_path }}/.env"
+    mode: '0600'
+
+- name: Template docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_project_path }}/docker-compose.yml"
+    mode: '0644'
+    # validate: "{{ docker_cmd }} compose -f %s config"
+    backup: true
+
+- name: Validate docker-compose.yml
+  ansible.builtin.command: "{{ docker_cmd }} compose -f {{ docker_project_path }}/docker-compose.yml config"
+  changed_when: false
+
+## Run
+
+- name: Start app
+  ansible.builtin.include_role: { name: djuuu.docker_project, tasks_from: compose-up }

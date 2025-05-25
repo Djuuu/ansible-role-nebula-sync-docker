@@ -1,0 +1,117 @@
+---
+
+# Docker project variables
+
+nebula_sync_project_name: nebula-sync
+
+
+# Nebula-Sync project variables
+
+# ghcr.io/lovelaze/nebula-sync image version
+nebula_sync_version: latest
+
+# Primary host configuration is pulled from (inventory hostname)
+nebula_sync_primary_pihole:
+#  base_url: "https://pihole.example.net"
+#  password: "p@55w0rd"
+
+# Secondary hosts configuration is injected into (inventory hostnames)
+nebula_sync_secondary_piholes:
+#  - base_url: "https://pihole.fallback1.example.net"
+#    password: "p@55w0rd1"
+#  - base_url: "https://pihole.fallback2.example.net"
+#    password: "p@55w0rd2"
+
+# Perform a full synchronization
+nebula_sync_full: true
+
+# Run gravity after syncing
+nebula_sync_run_gravity: false
+
+# Cron schedule for synchronization
+nebula_sync_cron: "0 * * * *"
+
+# Skip TLS certificate verification
+nebula_sync_client_skip_tls_verification: false
+# Seconds to delay between connection attempts
+nebula_sync_client_retry_delay_seconds: 1
+# Http client timeout in seconds
+nebula_sync_client_timeout_seconds: 20
+
+## Granular synchronization (only when nebula_sync_full: false)
+
+# Synchronize DNS settings
+nebula_sync_config_dns: false
+# Synchronize DHCP settings
+nebula_sync_config_dhcp: false
+# Synchronize NTP settings
+nebula_sync_config_ntp: false
+# Synchronize resolver settings
+nebula_sync_config_resolver: false
+# Synchronize database settings
+nebula_sync_config_database: false
+# Synchronize miscellaneous settings
+nebula_sync_config_misc: false
+# Synchronize debug settings
+nebula_sync_config_debug: false
+
+# Synchronize DHCP leases
+nebula_sync_gravity_dhcp_leases: false
+# Synchronize groups
+nebula_sync_gravity_group: false
+# Synchronize ad lists
+nebula_sync_gravity_ad_list: false
+# Synchronize ad lists by group
+nebula_sync_gravity_ad_list_by_group: false
+# Synchronize domain lists
+nebula_sync_gravity_domain_list: false
+# Synchronize domain lists by group
+nebula_sync_gravity_domain_list_by_group: false
+# Synchronize clients
+nebula_sync_gravity_client: false
+# Synchronize clients by group
+nebula_sync_gravity_client_by_group: false
+
+## Config filters
+
+# DNS config keys to include/exclude (ex: upstreams,interface)
+nebula_sync_config_dns_include:
+nebula_sync_config_dns_exclude:
+
+# DHCP config keys to include/exclude (ex: active,start)
+nebula_sync_config_dhcp_include:
+nebula_sync_config_dhcp_exclude:
+
+# NTP config keys to include/exclude (ex: ipv4,sync)
+nebula_sync_config_ntp_include:
+nebula_sync_config_ntp_exclude:
+
+# Resolver config keys to include/exclude (ex: resolveIPv4,networkNames)
+nebula_sync_config_resolver_include:
+nebula_sync_config_resolver_exclude:
+
+# Database config keys to include/exclude (ex: DBimport,maxDBdays)
+nebula_sync_config_database_include:
+nebula_sync_config_database_exclude:
+
+# Misc config keys to include/exclude (ex: nice,delay_startup)
+nebula_sync_config_misc_include:
+nebula_sync_config_misc_exclude:
+
+# Debug config keys to include/exclude (ex: database,networking)
+nebula_sync_config_debug_include:
+nebula_sync_config_debug_exclude:
+
+## Webhooks
+
+nebula_sync_webhook_sync_success_url:
+nebula_sync_webhook_sync_success_method: POST
+nebula_sync_webhook_sync_success_body:
+nebula_sync_webhook_sync_success_headers:
+
+nebula_sync_webhook_sync_failure_url:
+nebula_sync_webhook_sync_failure_method: POST
+nebula_sync_webhook_sync_failure_body:
+nebula_sync_webhook_sync_failure_headers:
+
+nebula_sync_webhook_client_skip_tls_verification: false
