@@ -5,13 +5,13 @@
 - name: Check variables
   ansible.builtin.assert:
     that:
-      - nebula_sync_primary_pihole is defined and nebula_sync_primary_pihole
-      - nebula_sync_primary_pihole.base_url is defined and nebula_sync_primary_pihole.base_url
-      - nebula_sync_primary_pihole.password is defined and nebula_sync_primary_pihole.password
+      - nebula_sync_primary_pihole is defined and nebula_sync_primary_pihole is truthy
+      - nebula_sync_primary_pihole.base_url is defined and nebula_sync_primary_pihole.base_url is truthy
+      - nebula_sync_primary_pihole.password is defined and nebula_sync_primary_pihole.password is truthy
       - nebula_sync_secondary_piholes is defined
       - nebula_sync_secondary_piholes | length > 0
-      - nebula_sync_secondary_piholes[0].base_url is defined and nebula_sync_secondary_piholes[0].base_url
-      - nebula_sync_secondary_piholes[0].password is defined and nebula_sync_secondary_piholes[0].password
+      - nebula_sync_secondary_piholes[0].base_url is defined and nebula_sync_secondary_piholes[0].base_url is truthy
+      - nebula_sync_secondary_piholes[0].password is defined and nebula_sync_secondary_piholes[0].password is truthy
 
 ## Init
 
